@@ -18,7 +18,8 @@ class Location extends Model
 
     // Mass assignable fields
     protected $fillable = [
-        'name'
+        'name',
+        'firm_id'
     ];
 
     // Enable date casting for timestamps and soft deletes
