@@ -14,7 +14,7 @@ class Branches extends Model
 
 
     // Table name (optional, if different from plural model name)
-    protected $table = 'locations';
+    protected $table = 'branches';
 
     // Mass assignable fields
     protected $fillable = [
@@ -22,7 +22,8 @@ class Branches extends Model
         'code',
         'gstn',
         'firmid',
-        'locationid'
+        'locationid',
+        'status'
     ];
 
     // Enable date casting for timestamps and soft deletes
