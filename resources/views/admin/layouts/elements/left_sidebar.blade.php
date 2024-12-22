@@ -20,7 +20,7 @@
 			</a>
 		</li>
 
-		<li class="menu-item {{ request()->routeIs('admin.location.*') || request()->routeIs('admin.branch.*') || request()->routeIs('admin.bank.*') || request()->routeIs('admin.account.*')|| request()->routeIs('admin.area.*')|| request()->routeIs('admin.dealer.*') || request()->routeIs('admin.mesurment.*') ? 'active open' : '' }}">
+		<li class="menu-item {{ request()->routeIs('admin.location.*') || request()->routeIs('admin.branch.*') || request()->routeIs('admin.bank.*') || request()->routeIs('admin.account.*')|| request()->routeIs('admin.area.*')|| request()->routeIs('admin.dealer.*') || request()->routeIs('admin.mesurment.*')|| request()->routeIs('admin.groups.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div class="text-truncate" data-i18n="Master">Master</div>
@@ -34,6 +34,7 @@
 					['route' => 'admin.area.index', 'text' => 'Area'],
 					['route' => 'admin.dealer.index', 'text' => 'Dealer'],
 					['route' => 'admin.mesurment.index', 'text' => 'Mesurment'],
+					['route' => 'admin.groups.index', 'text' => 'Group'],
                 ] as $mastermenu)
                     <li class="menu-item {{ request()->routeIs($mastermenu['route']) ? 'active' : '' }}">
                         <a href="{{ route($mastermenu['route']) }}" class="menu-link">
