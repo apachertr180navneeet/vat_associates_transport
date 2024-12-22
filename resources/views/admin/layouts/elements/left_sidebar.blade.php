@@ -20,7 +20,7 @@
 			</a>
 		</li>
 
-		<li class="menu-item {{ request()->routeIs('admin.location.*') || request()->routeIs('admin.branch.*') || request()->routeIs('admin.bank.*') || request()->routeIs('admin.account.*') ? 'active open' : '' }}">
+		<li class="menu-item {{ request()->routeIs('admin.location.*') || request()->routeIs('admin.branch.*') || request()->routeIs('admin.bank.*') || request()->routeIs('admin.account.*')|| request()->routeIs('admin.area.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div class="text-truncate" data-i18n="Master">Master</div>
@@ -31,6 +31,7 @@
 					['route' => 'admin.branch.index', 'text' => 'Branch'],
 					['route' => 'admin.bank.index', 'text' => 'Bank'],
 					['route' => 'admin.account.index', 'text' => 'Account'],
+					['route' => 'admin.area.index', 'text' => 'Area'],
                 ] as $mastermenu)
                     <li class="menu-item {{ request()->routeIs($mastermenu['route']) ? 'active' : '' }}">
                         <a href="{{ route($mastermenu['route']) }}" class="menu-link">

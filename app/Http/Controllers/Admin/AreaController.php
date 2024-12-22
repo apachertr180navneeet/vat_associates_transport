@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 use App\Models\{
     User,
     Location,
-    Branches
+    Area
 };
 use Mail, DB, Hash, Validator, Session, File, Exception, Redirect, Auth;
 use Illuminate\Validation\Rule;
 
-class BranchController extends Controller
+class AreaController extends Controller
 {
     /**
      * Display the User index page.
@@ -28,7 +28,7 @@ class BranchController extends Controller
 
         $location = Location::where('firm_id',$compId)->where('status','active')->orderBy('id', 'desc')->get();
         // Pass the company and comId to the view
-        return view('admin.branch.index', compact('location'));
+        return view('admin.area.index', compact('location'));
     }
 
     /**
@@ -43,9 +43,9 @@ class BranchController extends Controller
 
         $compId = $user->firm_id;
 
-        $branchs = Branches::join('locations', 'branches.locationid', '=', 'locations.id')
-        ->where('branches.firmid',$compId)
-        ->select('branches.*', 'locations.name as locations_name')
+        $branchs = Area::join('locations', 'areas.locationid', '=', 'locations.id')
+        ->where('areas.firm_id',$compId)
+        ->select('areas.*', 'locations.name as locations_name')
         ->get();
 
         return response()->json(['data' => $branchs]);
@@ -60,7 +60,7 @@ class BranchController extends Controller
     public function status(Request $request)
     {
         try {
-            $User = Branches::findOrFail($request->userId);
+            $User = Area::findOrFail($request->userId);
             $User->status = $request->status;
             $User->save();
 
@@ -79,7 +79,7 @@ class BranchController extends Controller
     public function destroy($id)
     {
         try {
-            Branches::where('id', $id)->delete();
+            Area::where('id', $id)->delete();
 
             return response()->json([
                 'success' => true,
@@ -98,9 +98,7 @@ class BranchController extends Controller
         // Validation rules
         $rules = [
             'name' => 'required|string',
-            'location' => 'required',
-            'gstn' => 'required',
-            'code' => 'required|unique:branches,code',
+            'locationid' => 'required',
         ];
 
         // Validate the request data
@@ -119,12 +117,10 @@ class BranchController extends Controller
         // Save the User data
         $dataUser = [
             'name' => $request->name,
-            'locationid' => $request->location,
-            'gstn' => $request->gstn,
-            'code' => $request->code,
-            'firmid' =>  $compId
+            'locationid' => $request->locationid,
+            'firm_id' =>  $compId
         ];
-        Branches::create($dataUser);
+        Area::create($dataUser);
         return response()->json([
             'success' => true,
             'message' => 'Branch saved successfully!',
@@ -134,7 +130,7 @@ class BranchController extends Controller
     // Fetch user data
     public function get($id)
     {
-        $user = Branches::find($id);
+        $user = Area::find($id);
         return response()->json($user);
     }
 
@@ -143,16 +139,10 @@ class BranchController extends Controller
     {
         $request->validate([
            'name' => 'required|string',
-            'location' => 'required',
-            'gstn' => 'required',
-            'id' => 'required|integer|exists:branches,id', // Adjust as needed
-            'code' => [
-                'required',
-                Rule::unique('branches', 'code')->ignore($request->id), // Ensure account number is unique, ignoring the current record
-            ],
+            'locationid' => 'required',
         ]);
 
-        $user = Branches::find($request->id);
+        $user = Area::find($request->id);
         if ($user) {
             $user->update($request->all());
             return response()->json(['success' => true , 'message' => 'Branch Update Successfully']);
