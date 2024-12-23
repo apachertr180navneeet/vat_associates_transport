@@ -20,7 +20,7 @@
 			</a>
 		</li>
 
-		<li class="menu-item {{ request()->routeIs('admin.location.*') || request()->routeIs('admin.branch.*') || request()->routeIs('admin.bank.*') || request()->routeIs('admin.account.*')|| request()->routeIs('admin.area.*')|| request()->routeIs('admin.dealer.*') || request()->routeIs('admin.mesurment.*')|| request()->routeIs('admin.groups.*') || request()->routeIs('admin.method.*') || request()->routeIs('admin.departmenttype.*') || request()->routeIs('admin.departmentlevel.*') ? 'active open' : '' }}">
+		<li class="menu-item {{ request()->routeIs('admin.location.*') || request()->routeIs('admin.branch.*') || request()->routeIs('admin.bank.*') || request()->routeIs('admin.account.*')|| request()->routeIs('admin.area.*')|| request()->routeIs('admin.dealer.*') || request()->routeIs('admin.mesurment.*')|| request()->routeIs('admin.groups.*') || request()->routeIs('admin.method.*') || request()->routeIs('admin.departmenttype.*') || request()->routeIs('admin.departmentlevel.*') || request()->routeIs('admin.item.*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div class="text-truncate" data-i18n="Master">Master</div>
@@ -38,6 +38,7 @@
 					['route' => 'admin.method.index', 'text' => 'Method'],
 					['route' => 'admin.departmenttype.index', 'text' => 'Department Type'],
 					['route' => 'admin.departmentlevel.index', 'text' => 'Department Level'],
+					['route' => 'admin.item.index', 'text' => 'Item'],
                 ] as $mastermenu)
                     <li class="menu-item {{ request()->routeIs($mastermenu['route']) ? 'active' : '' }}">
                         <a href="{{ route($mastermenu['route']) }}" class="menu-link">

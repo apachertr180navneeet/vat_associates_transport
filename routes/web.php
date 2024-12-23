@@ -14,7 +14,8 @@ use App\Http\Controllers\Admin\{
     LocationController,
     BranchController,
     BankController,
-    GroupsController
+    GroupsController,
+    ItemController
 };
 
 /*
@@ -85,7 +86,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Master Route
         // Resource Management Routes (Variation, Tax, Item, Vendor, Customer)
-        foreach (['location','branch','bank','account','area','dealer','mesurment','groups','method','departmenttype','departmentlevel'] as $resource) {
+        foreach (['location','branch','bank','account','area','dealer','mesurment','groups','method','departmenttype','departmentlevel','item'] as $resource) {
             Route::prefix($resource)->name("$resource.")->group(function () use ($resource) {
                 $controller = "App\Http\Controllers\Admin\\" . ucfirst($resource) . "Controller";
                 Route::get('/', [$controller, 'index'])->name('index');

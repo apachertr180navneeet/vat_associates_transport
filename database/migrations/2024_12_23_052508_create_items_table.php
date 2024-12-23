@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('skucode');
             $table->BigInteger('measurment');
             $table->BigInteger('group');
-            $table->BigInteger('methiod');
+            $table->BigInteger('method');
             $table->string('open_stock');
             $table->string('price');
             $table->string('description');

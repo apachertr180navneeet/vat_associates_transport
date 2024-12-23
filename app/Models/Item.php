@@ -23,7 +23,7 @@ class Item extends Model
         'skucode',
         'measurment',
         'group',
-        'methiod',
+        'method',
         'open_stock',
         'price',
         'description',
