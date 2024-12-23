@@ -7,12 +7,12 @@
     <div class="row">
         <div class="col-md-6 text-start">
             <h5 class="py-2 mb-2">
-                <span class="text-primary fw-light">Bank</span>
+                <span class="text-primary fw-light">Vechile</span>
             </h5>
         </div>
         <div class="col-md-6 text-end">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-                Add Bank
+                Add Vechile
             </button>
         </div>
     </div>
@@ -25,10 +25,10 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Account Number</th>
-                                    <th>Account Holder Name</th>
-                                    <th>IFSC Code</th>
-                                    <th>Address</th>
+                                    <th>Registration</th>
+                                    <th>Number Plate</th>
+                                    <th>Model</th>
+                                    <th>Company</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -46,7 +46,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1">Bank Add</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">Vechile Add</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -57,23 +57,23 @@
                         <small class="error-text text-danger"></small>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="accountno" class="form-label">Account Number</label>
-                        <input type="text" id="accountno" class="form-control" placeholder="Enter Account Number" />
+                        <label for="registration" class="form-label">Registration</label>
+                        <input type="text" id="registration" class="form-control" placeholder="Enter Registration" />
                         <small class="error-text text-danger"></small>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="accountholdername" class="form-label">Account Holder Name</label>
-                        <input type="text" id="accountholdername" class="form-control" placeholder="Enter Account Holder Name" />
+                        <label for="number_plate" class="form-label">Number Plate</label>
+                        <input type="text" id="number_plate" class="form-control" placeholder="Enter Number Plate" />
                         <small class="error-text text-danger"></small>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="ifsc_code" class="form-label">IFSC Code</label>
-                        <input type="text" id="ifsc_code" class="form-control" placeholder="Enter IFSC Code" />
+                        <label for="model" class="form-label">Model</label>
+                        <input type="text" id="model" class="form-control" placeholder="Enter Model" />
                         <small class="error-text text-danger"></small>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" id="address" class="form-control" placeholder="Enter Address" />
+                        <label for="company" class="form-label">Company</label>
+                        <input type="text" id="company" class="form-control" placeholder="Enter Company" />
                         <small class="error-text text-danger"></small>
                     </div>
                 </div>
@@ -90,35 +90,35 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1">Bank Edit</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">Vechile Edit</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <input type="hidden" id="compid">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="editname" class="form-label">Name</label>
                         <input type="text" id="editname" class="form-control" placeholder="Enter Name" />
                         <small class="error-text text-danger"></small>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="editaccountno" class="form-label">Account Number</label>
-                        <input type="text" id="editaccountno" class="form-control" placeholder="Enter Account Number" />
+                        <label for="editregistration" class="form-label">Registration</label>
+                        <input type="text" id="editregistration" class="form-control" placeholder="Enter Registration" />
                         <small class="error-text text-danger"></small>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="editaccountholdername" class="form-label">Account Holder Name</label>
-                        <input type="text" id="editaccountholdername" class="form-control" placeholder="Enter Account Holder Name" />
+                        <label for="editnumber_plate" class="form-label">Number Plate</label>
+                        <input type="text" id="editnumber_plate" class="form-control" placeholder="Enter Number Plate" />
                         <small class="error-text text-danger"></small>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="edit_ifsc_code" class="form-label">IFSC Code</label>
-                        <input type="text" id="edit_ifsc_code" class="form-control" placeholder="Enter IFSC Code" />
+                        <label for="editmodel" class="form-label">Model</label>
+                        <input type="text" id="editmodel" class="form-control" placeholder="Enter Model" />
                         <small class="error-text text-danger"></small>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="edit_address" class="form-label">Address</label>
-                        <input type="text" id="edit_address" class="form-control" placeholder="Enter Address" />
+                        <label for="editcompany" class="form-label">Company</label>
+                        <input type="text" id="editcompany" class="form-control" placeholder="Enter Company" />
                         <small class="error-text text-danger"></small>
                     </div>
                 </div>
@@ -137,15 +137,15 @@
         const table = $('#bankTable').DataTable({
             processing: true,
             ajax: {
-                url: "{{ route('admin.bank.getall') }}",
+                url: "{{ route('admin.vechile.getall') }}",
                 type: 'GET',
             },
             columns: [
                 { data: "name" },
-                { data: "accountno" },
-                { data: "accountholdername" },
-                { data: "ifsc_code" },
-                { data: "address" },
+                { data: "registration" },
+                { data: "number_plate" },
+                { data: "model" },
+                { data: "company" },
                 {
                     data: "status",
                     render: (data, type, row) => {
@@ -179,10 +179,10 @@
             // Collect form data
             let data = {
                 name: $('#name').val(),
-                accountno: $('#accountno').val(),
-                accountholdername: $('#accountholdername').val(),
-                ifsc_code: $('#ifsc_code').val(),
-                address: $('#address').val(),
+                registration: $('#registration').val(),
+                number_plate: $('#number_plate').val(),
+                model: $('#model').val(),
+                company: $('#company').val(),
                 _token: $('meta[name="csrf-token"]').attr('content')
             };
 
@@ -190,7 +190,7 @@
             $('.error-text').text('');
 
             $.ajax({
-                url: '{{ route('admin.bank.store') }}',
+                url: '{{ route('admin.vechile.store') }}',
                 type: 'POST',
                 data: data,
                 success: function(response) {
@@ -220,17 +220,17 @@
 
         // Define editLocation function
         window.editLocation = function(userId) {
-            const url = '{{ route("admin.bank.get", ":userid") }}'.replace(":userid", userId);
+            const url = '{{ route("admin.vechile.get", ":userid") }}'.replace(":userid", userId);
             $.ajax({
                 url: url,
                 method: 'GET',
                 success: function(data) {
                     $('#compid').val(data.id);
                     $('#editname').val(data.name);
-                    $('#editaccountno').val(data.accountno);
-                    $('#editaccountholdername').val(data.accountholdername);
-                    $('#edit_ifsc_code').val(data.ifsc_code);
-                    $('#edit_address').val(data.address);
+                    $('#editregistration').val(data.registration);
+                    $('#editnumber_plate').val(data.number_plate);
+                    $('#editmodel').val(data.model);
+                    $('#editcompany').val(data.company);
         
                     $('#editModal').modal('show');
                     setFlash("success", 'Variation found successfully.');
@@ -245,15 +245,15 @@
         $('#EditLocation').on('click', function() {
             const userId = $('#compid').val();
             $.ajax({
-                url: '{{ route('admin.bank.update') }}',
+                url: '{{ route('admin.vechile.update') }}',
                 method: 'POST',
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
                     name: $('#editname').val(),
-                    accountno: $('#editaccountno').val(),
-                    accountholdername: $('#editaccountholdername').val(),
-                    ifsc_code: $('#edit_ifsc_code').val(),
-                    address: $('#edit_address').val(),
+                    registration: $('#editregistration').val(),
+                    number_plate: $('#editnumber_plate').val(),
+                    model: $('#editmodel').val(),
+                    company: $('#editcompany').val(),
                     id: userId
                 },
                 success: function(response) {
@@ -298,7 +298,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "POST",
-                        url: "{{ route('admin.bank.status') }}",
+                        url: "{{ route('admin.vechile.status') }}",
                         data: { userId, status, _token: $('meta[name="csrf-token"]').attr('content') },
                         success: function (response) {
                             if (response.success) {
@@ -331,7 +331,7 @@
                 confirmButtonText: "Yes",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const url = '{{ route("admin.bank.destroy", ":userId") }}'.replace(":userId", userId);
+                    const url = '{{ route("admin.vechile.destroy", ":userId") }}'.replace(":userId", userId);
                     $.ajax({
                         type: "DELETE",
                         url,
@@ -340,7 +340,7 @@
                             if (response.success) {
                                 setFlash("success", "User deleted successfully.");
                             } else {
-                                setFlash("error", "There was an issue deleting the bank. Please contact your system administrator.");
+                                setFlash("error", "There was an issue deleting the vechile. Please contact your system administrator.");
                             }
                             table.ajax.reload();
                         },
