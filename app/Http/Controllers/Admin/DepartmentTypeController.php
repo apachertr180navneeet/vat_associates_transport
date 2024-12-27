@@ -12,7 +12,7 @@ use App\Models\{
 use Mail, DB, Hash, Validator, Session, File, Exception, Redirect, Auth;
 use Illuminate\Validation\Rule;
 
-class DepartmentTypeController extends Controller
+class DepartmenttypeController extends Controller
 {
     /**
      * Display the User index page.

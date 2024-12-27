@@ -16,7 +16,17 @@ use App\Http\Controllers\Admin\{
     BankController,
     GroupsController,
     ItemController,
-    DeapartmentController
+    DeapartmentController,
+    DepartmenttypeController,
+    DepartmentlevelController,
+    AccountController,
+    AreaController,
+    DealerController,
+    EmployeeController,
+    MesurmentController,
+    MethodController,
+    VechileController,
+    VendorController
 };
 
 /*
