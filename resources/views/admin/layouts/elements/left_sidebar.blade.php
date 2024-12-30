@@ -53,6 +53,13 @@
                 @endforeach
             </ul>
         </li>
+
+		<li class="menu-item {{ request()->routeIs('admin.builty.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.builty.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Dashboard">Builty</div>
+            </a>
+        </li>
 		
 	</ul>
 </aside>

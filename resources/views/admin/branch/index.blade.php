@@ -257,7 +257,7 @@
                     name: $('#editname').val(),
                     code: $('#editcode').val(),
                     gstn: $('#editgstn').val(),
-                    location: $('#editlocation').val(),
+                    locationid: $('#editlocation').val(),
                     id: userId // Ensure userId is in scope or adjust accordingly
                 },
                 success: function(response) {

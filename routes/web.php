@@ -26,7 +26,8 @@ use App\Http\Controllers\Admin\{
     MesurmentController,
     MethodController,
     VechileController,
-    VendorController
+    VendorController,
+    BuiltyController
 };
 
 /*
@@ -109,6 +110,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::post('update', [$controller, 'update'])->name('update');
             });
         }
+
+        // Purchase Book Management Routes
+        Route::prefix('builty')->name('builty.')->controller(BuiltyController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('all', 'getall')->name('getall');
+            Route::get('/add', 'add')->name('add');
+            Route::post('/store', 'store')->name('store');
+            Route::delete('/delete/{id}', 'destroy')->name('destroy');
+            Route::get('/edit/{id}', 'edit')->name('edit'); // Edit route
+            Route::get('/view/{id}', 'view')->name('view'); // View route
+            Route::put('/update/{id}', 'update')->name('update'); // Update route
+        });
     });
 });
 

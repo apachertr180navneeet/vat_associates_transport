@@ -143,7 +143,7 @@ class BranchController extends Controller
     {
         $request->validate([
            'name' => 'required|string',
-            'location' => 'required',
+            'locationid' => 'required',
             'gstn' => 'required',
             'id' => 'required|integer|exists:branches,id', // Adjust as needed
             'code' => [
