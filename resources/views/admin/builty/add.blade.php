@@ -56,7 +56,7 @@
                                     <label for="branch" class="form-label">G.R NO.</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" id="branch_code" name="branch_code" placeholder="Enter Date" readonly/>
+                                            <input type="text" class="form-control" id="branch_code" name="branch_code" placeholder="Enter Branch Code" readonly/>
                                         </div>
                                         <div class="col-md-6">
                                             <input type="text" class="form-control" id="grn" name="grn" value="" placeholder="Enter GR no."/>
@@ -122,7 +122,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="no_of_package" class="form-label">No. Of Package</label>
-                                    <input type="text" class="form-control" id="no_of_package" name="no_of_package" value="" placeholder="Enter No. Of Package" readonly/>
+                                    <input type="text" class="form-control" id="no_of_package" name="no_of_package" value="" placeholder="Enter No. Of Package"/>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -237,7 +237,7 @@
         });
     
         // Set the input field to readonly and restrict to numbers
-        $noOfPackage.attr('readonly', true).on('input', function () {
+        $noOfPackage.on('input', function () {
             var numericValue = $(this).val().replace(/[^0-9]/g, ''); // Remove non-numeric characters
             $(this).val(numericValue); // Set the value back to the input
         });
