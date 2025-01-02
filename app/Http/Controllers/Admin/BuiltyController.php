@@ -32,7 +32,16 @@ class BuiltyController extends Controller
 
         $compId = $user->firm_id;
 
-        return view('admin.builty.index');
+        $builtys = Builty::where('builty.firm_id', $compId)
+                   ->join('branches', 'builty.branch', '=', 'branches.id')
+                   ->join('vendors as consigner', 'builty.consigner', '=', 'consigner.id')
+                   ->join('vendors as conignee', 'builty.conignee', '=', 'conignee.id')
+                   ->join('cities as from', 'builty.consigner', '=', 'from.id')
+                   ->join('cities as to', 'builty.conignee', '=', 'to.id')
+                   ->select('builty.*', 'branches.name as branch_name' , 'consigner.name as consigner_name' , 'conignee.name as conignee_name' , 'from.city_name as from_name' , 'to.city_name as to_name')
+                   ->get();
+
+        return view('admin.builty.index', compact('builtys'));
     }
 
 
@@ -66,42 +75,42 @@ class BuiltyController extends Controller
     public function store(Request $request)
     {
         // Validate the request data
-        $validatedData = $request->validate([
-            'date' => 'required|date',
-            'branch' => 'required|exists:branches,id',
-            'grn' => 'required',
-            'consigner' => 'required|exists:vendors,id',
-            'conignee' => 'required|exists:vendors,id',
-            'form_city' => 'required',
-            'to_city' => 'required',
-            'good_location' => 'required|exists:branches,id',
-            'no_of_package' => 'required|numeric',
-            'total_price' => 'required|numeric',
-            'items' => 'required|array|min:1',
-            'items.*' => 'exists:items,id',
-            'freight_charge' => 'required|array|min:1',
-            'freight_charge.*' => 'required|numeric|min:1',
-            'surcharge' => 'required|array|min:1',
-            'surcharge.*' => 'required|numeric|min:0',
-            'cover' => 'required|array|min:1',
-            'cover.*' => 'required|numeric|min:0',
-            'h' => 'required|array|min:1',
-            'h.*' => 'required|numeric|min:0',
-            'insurance' => 'required|array|min:1',
-            'insurance.*' => 'required|numeric|min:0',
-            'heading' => 'required|array|min:1',
-            'heading.*' => 'required|numeric|min:0',
-            'cps' => 'required|array|min:1',
-            'cps.*' => 'required|numeric|min:0',
-            'total' => 'required|array|min:1',
-            'total.*' => 'required|numeric|min:0',
-        ]);
+        // $validatedData = $request->validate([
+        //     'date' => 'required|date',
+        //     'type' => 'required',
+        //     'branch' => 'required|exists:branches,id',
+        //     'grn' => 'required',
+        //     'consigner' => 'required|exists:vendors,id',
+        //     'conignee' => 'required|exists:vendors,id',
+        //     'form_city' => 'required',
+        //     'to_city' => 'required',
+        //     'good_location' => 'required|exists:branches,id',
+        //     'no_of_package' => 'required|numeric',
+        //     'total_price' => 'required|numeric',
+        //     'items' => 'required|array|min:1',
+        //     'items.*' => 'exists:items,id',
+        //     'freight_charge' => 'required|array|min:1',
+        //     'freight_charge.*' => 'required|numeric|min:1',
+        //     'surcharge' => 'required|array|min:1',
+        //     'surcharge.*' => 'required|numeric|min:0',
+        //     'cover' => 'required|array|min:1',
+        //     'cover.*' => 'required|numeric|min:0',
+        //     'h' => 'required|array|min:1',
+        //     'h.*' => 'required|numeric|min:0',
+        //     'insurance' => 'required|array|min:1',
+        //     'insurance.*' => 'required|numeric|min:0',
+        //     'heading' => 'required|array|min:1',
+        //     'heading.*' => 'required|numeric|min:0',
+        //     'cps' => 'required|array|min:1',
+        //     'cps.*' => 'required|numeric|min:0',
+        //     'total' => 'required|array|min:1',
+        //     'total.*' => 'required|numeric|min:0',
+        // ]);
 
         // Start a database transaction
         DB::beginTransaction();
 
         try {
-            
             // Add Builty
             $builty = Builty::create([
                 'firm_id' => $request->compid,
@@ -118,17 +127,37 @@ class BuiltyController extends Controller
                 'total_price' => $request->total_price,
             ]);
 
-            // Redirect with success message and last inserted data
-            return redirect()->route('company.purches.book.index')
-                ->with('success', 'Purchase book entry saved successfully.')
-                ->with('lastPurchesBook', $lastPurchesBook);
+            foreach ($request->items as $index => $itemId) {
+                $item = BuiltyItem::create([
+                    'builty_item_id' => $builty->id,
+                    'item' => $itemId,
+                    'freight_charge' => $request->freight_charge[$index],
+                    'surcharge' => $request->surcharge[$index],
+                    'cover' => $request->cover[$index],
+                    'h' => $request->h[$index],
+                    'insurance' => $request->insurance[$index],
+                    'heading' => $request->heading[$index],
+                    'cps' => $request->cps[$index],
+                    'total' => $request->total[$index],
+                ]);
+            }
+
+            // Commit the transaction
+            DB::commit();
+
+            // Redirect with success message
+            return redirect()->route('admin.builty.index')
+                ->with('success', 'Builty entry saved successfully.');
 
         } catch (\Exception $e) {
+            dd($e);
             // Rollback the transaction on error
             DB::rollback();
-            dd($e);
-            // Redirect with an error message
-            return redirect()->back()->with('error', 'An error occurred while saving the purchase book entry.');
+
+            // Redirect back with error message and old input
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'An error occurred while saving the Builty entry.');
         }
     }
 }

@@ -13,16 +13,20 @@ class BuiltyItem extends Model
     use SoftDeletes;
 
     // Table name (optional, if different from plural model name)
-    protected $table = 'branches';
+    protected $table = 'builty_item';
 
     // Mass assignable fields
     protected $fillable = [
-        'name',
-        'code',
-        'gstn',
-        'firmid',
-        'locationid',
-        'status'
+        'builty_item_id',
+        'item',
+        'freight_charge',
+        'surcharge',
+        'cover',
+        'h',
+        'insurance',
+        'heading',
+        'cps',
+        'total'
     ];
 
     // Enable date casting for timestamps and soft deletes

@@ -17,10 +17,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <table class="table table-bordered" id="branchTable">
+                        <table class="table table-bordered" id="builtyTable">
                             <thead>
                                 <tr>
-                                    <th>S. No.</th>
                                     <th>Date</th>
                                     <th>G.R. No.</th>
                                     <th>Branch</th>
@@ -35,20 +34,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1.</td>
-                                    <td>12/05/2024</td>
-                                    <td>1236547890</td>
-                                    <th>Branch 1</th>
-                                    <th>Consigner 1</th>
-                                    <th>Consignee 1</th>
-                                    <th>Jodhpur</th>
-                                    <th>Jaipur</th>
-                                    <th>10</th>
-                                    <th>1000</th>
-                                    <th>Pending</th>
-                                    <th>Action</th>
-                                </tr>
+                                @foreach ($builtys as $builty)    
+                                    <tr>
+                                        <td>{{ $builty->date }}</td>
+                                        <td>{{ $builty->grno }}</td>
+                                        <th>{{ $builty->branch_name }}</th>
+                                        <th>{{ $builty->consigner_name }}</th>
+                                        <th>{{ $builty->conignee_name }}</th>
+                                        <th>{{ $builty->from_name }}</th>
+                                        <th>{{ $builty->to_name }}</th>
+                                        <th>{{ $builty->no_of_package }}</th>
+                                        <th>{{ $builty->total_price }}</th>
+                                        <th>
+                                            @if ($builty->total_price == 'delivered')
+                                                <span class="badge bg-label-success me-1">Delivered</span>    
+                                            @else
+                                                <span class="badge bg-label-warning me-1">Pending</span>
+                                            @endif
+                                        </th>
+                                        <th>
+                                            <a href="" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="" class="btn btn-sm btn-warning">Report</a>
+                                            <a href="" class="btn btn-sm btn-warning">SMS</a>
+                                            <a href="" class="btn btn-sm btn-danger">Delete</a>
+                                        </th>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -60,5 +71,10 @@
 
 @endsection @section('script')
 <script>
+    $(document).ready(function() {
+        const table = $('#builtyTable').DataTable({
+            processing: true,
+        });
+    });
 </script>
 @endsection
