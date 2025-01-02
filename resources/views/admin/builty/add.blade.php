@@ -16,7 +16,8 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form role="form" action="{{ route('admin.builty.store') }}" method="post" id="coustomer_add" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 class="card-header">Basic Information</h5>
@@ -31,12 +32,12 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="type" class="form-label">Type</label>
-                                    <select class="form-select" id="type">
+                                    <select class="form-select" id="type" name="type">
                                         <option selected>Select Type</option>
-                                        <option value="1">to pay</option>
-                                        <option value="2">free of cost</option>
-                                        <option value="3">to be billed</option>
-                                        <option value="4">paid</option>
+                                        <option value="to_pay">to pay</option>
+                                        <option value="free_of_cost">free of cost</option>
+                                        <option value="to_be_billed">to be billed</option>
+                                        <option value="paid">paid</option>
                                       </select>
                                 </div>
                             </div>
