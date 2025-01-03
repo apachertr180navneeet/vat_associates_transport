@@ -37,8 +37,8 @@ class BuiltyController extends Controller
                    ->join('branches', 'builty.branch', '=', 'branches.id')
                    ->join('vendors as consigner', 'builty.consigner', '=', 'consigner.id')
                    ->join('vendors as conignee', 'builty.conignee', '=', 'conignee.id')
-                   ->join('cities as from', 'builty.consigner', '=', 'from.id')
-                   ->join('cities as to', 'builty.conignee', '=', 'to.id')
+                   ->join('cities as from', 'builty.from_city', '=', 'from.id')
+                   ->join('cities as to', 'builty.to_city', '=', 'to.id')
                    ->select('builty.*', 'branches.name as branch_name' , 'branches.code as branch_code' , 'consigner.name as consigner_name' , 'conignee.name as conignee_name' , 'from.city_name as from_name' , 'to.city_name as to_name')
                    ->get();
 

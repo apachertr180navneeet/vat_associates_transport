@@ -140,12 +140,13 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="good_location" class="form-label">Goods location</label>
-                                    <select class="form-select" id="good_location" name="good_location" required>
+                                    {{--  <select class="form-select" id="good_location" name="good_location" required>
                                         <option value="">Select Goods location</option>
                                         @foreach ( $branchs as $branch)
                                             <option value="{{ $branch->id }}" >{{ $branch->name }}</option>
                                         @endforeach
-                                    </select>
+                                    </select>  --}}
+                                    <input type="text" class="form-control" id="good_location" name="good_location" value="" placeholder="Enter Good Location" required/>
                                     @error('good_location')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -295,11 +296,11 @@
         });
 
         // Event listener for form_city selection change
-        $formCity.on('change', function () {
-            var selectedFormCity = $(this).val(); // Get the selected form city value
+        //$formCity.on('change', function () {
+            //var selectedFormCity = $(this).val(); // Get the selected form city value
             // Remove the selected city from the to_city dropdown
-            $toCity.find('option[value="' + selectedFormCity + '"]').remove();
-        });
+            //$toCity.find('option[value="' + selectedFormCity + '"]').remove();
+        //});
 
         // Set the input field to readonly and restrict to numbers
         $noOfPackage.on('input', function () {
