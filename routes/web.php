@@ -118,9 +118,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/add', 'add')->name('add');
             Route::post('/store', 'store')->name('store');
             Route::delete('/delete/{id}', 'destroy')->name('destroy');
+            Route::post('/status', 'status')->name('status');
             Route::get('/edit/{id}', 'edit')->name('edit'); // Edit route
-            Route::get('/view/{id}', 'view')->name('view'); // View route
-            Route::put('/update/{id}', 'update')->name('update'); // Update route
+            // Route::get('/view/{id}', 'view')->name('view'); // View route
+            // Route::put('/update/{id}', 'update')->name('update'); // Update route
         });
     });
 });

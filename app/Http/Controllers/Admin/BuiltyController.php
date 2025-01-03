@@ -160,4 +160,80 @@ class BuiltyController extends Controller
                 ->with('error', 'An error occurred while saving the Builty entry.');
         }
     }
+
+    /**
+     * Force Delete a User by its ID.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        try {
+            // Force delete the main record
+            Builty::where('id', $id)->forceDelete();
+
+            // Force delete associated items
+            BuiltyItem::where('builty_item_id', $id)->forceDelete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Branch deleted successfully',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    /**
+     * Update the status of a User.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function status(Request $request)
+    {
+        try {
+            $User = Builty::findOrFail($request->userId);
+            $User->status = $request->status;
+            $User->save();
+
+            return response()->json(['success' => true]);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+    // Fetch user data
+    public function edit($id)
+    {
+        $user = Auth::user();
+        $compId = $user->firm_id;
+        $currentDate = Carbon::now()->toDateString();
+
+        // Retrieve all active branches, vendors, and cities in a single query each
+        $branchs = Branches::where('firmid', $compId)->where('status', 'active')->get();
+        $vendors = Vendor::where('firm_id', $compId)
+            ->where('status', 'active')
+            ->get()
+            ->groupBy('type'); // Group vendors by type to separate consignees and consigners
+
+        $cites = City::all(); // Retrieve all cities
+
+        $items = Item::where('firm_id', $compId)->get(); // Retrieve items
+
+        // Extract consignees and consigners from the grouped vendors
+        $consignees = $vendors->get('consignee', collect());
+        $consigners = $vendors->get('consigner', collect());
+
+        $builty = Builty::find($id);
+
+
+        // Return view with compacted data
+        return view('admin.builty.edit', compact('currentDate', 'compId', 'branchs', 'consignees', 'consigners', 'cites', 'items','builty'));
+    }
 }
