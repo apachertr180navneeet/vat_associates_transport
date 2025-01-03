@@ -37,7 +37,7 @@
                                 @foreach ($builtys as $builty)    
                                     <tr>
                                         <td>{{ $builty->date }}</td>
-                                        <td>{{ $builty->grno }}</td>
+                                        <td>{{ $builty->branch_code }}-{{ $builty->grno }}</td>
                                         <th>{{ $builty->branch_name }}</th>
                                         <th>{{ $builty->consigner_name }}</th>
                                         <th>{{ $builty->conignee_name }}</th>
@@ -53,15 +53,17 @@
                                             @endif
                                         </th>
                                         <th>
-                                            <a href="{{ route('admin.builty.edit', $builty->id ) }}" class="btn btn-sm btn-warning">Edit</a>
-                                            <a href="" class="btn btn-sm btn-info">Report</a>
+                                            {{--  <a href="{{ route('admin.builty.edit', $builty->id ) }}" class="btn btn-sm btn-warning">Edit</a>  --}}
+                                            <a href="{{ route('admin.builty.report', $builty->id ) }}" class="btn btn-sm btn-info">Report</a>
                                             {{--   <a href="" class="btn btn-sm btn-warning">SMS</a>  --}}
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="deleteUser({{ $builty->id }})">Delete</button>
 
                                             @if ($builty->status == 'pending')
-                                                <button type="button" class="btn btn-sm btn-success" onclick="updateUserStatus({{ $builty->id }} , 'delivered')">Delivered</button>    
-                                            @else
-                                                <button type="button" class="btn btn-sm btn-warning" onclick="updateUserStatus({{ $builty->id }} , 'pending')">Pending</button>
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteUser({{ $builty->id }})">Delete</button>
+                                                @if ($builty->status == 'pending')
+                                                    <button type="button" class="btn btn-sm btn-success" onclick="updateUserStatus({{ $builty->id }} , 'delivered')">Delivered</button>    
+                                                @else
+                                                    <button type="button" class="btn btn-sm btn-warning" onclick="updateUserStatus({{ $builty->id }} , 'pending')">Pending</button>
+                                                @endif
                                             @endif
                                         </th>
                                     </tr>

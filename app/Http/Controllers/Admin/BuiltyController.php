@@ -13,7 +13,8 @@ use App\Models\{
     City,
     Item,
     Builty,
-    BuiltyItem
+    BuiltyItem,
+    Firm
 };
 use Mail, DB, Hash, Validator, Session, File, Exception, Redirect, Auth;
 use Illuminate\Validation\Rule;
@@ -38,7 +39,7 @@ class BuiltyController extends Controller
                    ->join('vendors as conignee', 'builty.conignee', '=', 'conignee.id')
                    ->join('cities as from', 'builty.consigner', '=', 'from.id')
                    ->join('cities as to', 'builty.conignee', '=', 'to.id')
-                   ->select('builty.*', 'branches.name as branch_name' , 'consigner.name as consigner_name' , 'conignee.name as conignee_name' , 'from.city_name as from_name' , 'to.city_name as to_name')
+                   ->select('builty.*', 'branches.name as branch_name' , 'branches.code as branch_code' , 'consigner.name as consigner_name' , 'conignee.name as conignee_name' , 'from.city_name as from_name' , 'to.city_name as to_name')
                    ->get();
 
         return view('admin.builty.index', compact('builtys'));
@@ -235,5 +236,49 @@ class BuiltyController extends Controller
 
         // Return view with compacted data
         return view('admin.builty.edit', compact('currentDate', 'compId', 'branchs', 'consignees', 'consigners', 'cites', 'items','builty'));
+    }
+
+    public function report($id)
+    {
+
+        $user = Auth::user();
+        $compId = $user->firm_id;
+
+        $firm = Firm::find($compId);
+
+
+        $builty = Builty::where('builty.id', $id)
+        ->join('branches', 'builty.branch', '=', 'branches.id')
+        ->join('vendors as consigner', 'builty.consigner', '=', 'consigner.id')
+        ->join('vendors as conignee', 'builty.conignee', '=', 'conignee.id')
+        ->join('cities as from', 'builty.consigner', '=', 'from.id')
+        ->join('cities as to', 'builty.conignee', '=', 'to.id')
+        ->select(
+            'builty.*', 
+            'branches.name as branch_name', 
+            'branches.code as branch_code', 
+            'consigner.name as consigner_name',
+            'consigner.contact as consigner_contact',
+            'consigner.email as consigner_email', 
+            'conignee.name as conignee_name',
+            'conignee.contact as conignee_contact',
+            'conignee.email as conignee_email', 
+            'from.city_name as from_name', 
+            'to.city_name as to_name'
+        )
+        ->first();
+
+        $builtyItems = BuiltyItem::where('builty_item.builty_item_id', $id)
+        ->join('items', 'builty_item.item', '=', 'items.id')
+        ->select(
+            'builty_item.*', 
+            'items.name as item_name',
+            'items.skucode as item_skucode', 
+        )
+        ->get();
+
+
+        // Return view with compacted data
+        return view('admin.builty.report', compact('builty','firm','user','builtyItems'));
     }
 }

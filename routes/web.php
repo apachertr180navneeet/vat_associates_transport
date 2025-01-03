@@ -120,6 +120,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/delete/{id}', 'destroy')->name('destroy');
             Route::post('/status', 'status')->name('status');
             Route::get('/edit/{id}', 'edit')->name('edit'); // Edit route
+            Route::get('/report/{id}', 'report')->name('report'); // Report route
             // Route::get('/view/{id}', 'view')->name('view'); // View route
             // Route::put('/update/{id}', 'update')->name('update'); // Update route
         });
